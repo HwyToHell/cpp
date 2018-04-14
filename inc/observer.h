@@ -13,8 +13,6 @@
 #include <string>
 #include <algorithm>
 
-
-
 void updateObserver(class Observer* pObserver);
 
 class Subject {
@@ -27,7 +25,6 @@ public:
 	void notifyObservers() {
 		std::for_each(mObservers.begin(), mObservers.end(), updateObserver);
 	}
-	virtual double getDouble(std::string name) = 0 {};
 	virtual std::string getParam(std::string name) = 0 {};
 	virtual bool setParam(std::string name, std::string value) = 0 {};
 };

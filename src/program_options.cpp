@@ -1,8 +1,8 @@
+#include "stdafx.h"
 #include <cstring>
 #include "../inc/program_options.h"
 
 char ProgramOptions::getOpt(int argc, char* argv[], char* optstr) {
-	//int ret = 0;
 	if (mOptInd >= argc)
 		return mEof;
 	char *optch, *colon;
@@ -29,7 +29,7 @@ char ProgramOptions::getOpt(int argc, char* argv[], char* optstr) {
 }
 
 
-bool ProgramOptions::parseCmdLine(int ac, char* av[], char* optDesc) {
+ProgramOptions::ProgramOptions(int ac, char* av[], char* optDesc) : mEof(-1) {
 	mOptInd = 1;
 	char c;
 	while ((c = getOpt(ac, av, optDesc)) != mEof) {
@@ -40,7 +40,16 @@ bool ProgramOptions::parseCmdLine(int ac, char* av[], char* optDesc) {
 				mOptMap.insert(TOpt(c, ""));
 		}
 	}
-	return true;
 }
-	
-TOptMap& ProgramOptions::getOptMap()  { return mOptMap; }
+
+bool ProgramOptions::exists(char option) {
+	if (mOptMap.count(option) > 0)
+		return true;
+	else 
+		return false;
+}
+
+std::string& ProgramOptions::getOptArg(char option) {
+	return mOptMap[option];
+}
+

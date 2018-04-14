@@ -25,10 +25,12 @@ private:
 	char getOpt(int argc, char* argv[], char* optstr);
 
 public:
-	ProgramOptions() : mEof(-1) {}
+	ProgramOptions(int ac, char* av[], char* optDesc);
 
-	bool parseCmdLine(int ac, char* av[], char* optDesc);
+	bool exists(char option);
+
+	std::string& getOptArg(char option);
 	
-	TOptMap& getOptMap();
+friend int mapSize_test(ProgramOptions& opts);
 
 };

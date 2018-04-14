@@ -1,8 +1,13 @@
 Class for simple command line option parsing
 ==============================================================================
-cpp/inc/program_options.h		declarations
-cpp/inc/program_options.cpp		implementation
-program_options.cpp				functional example
+cpp/inc/program_options.h
+declarations
+
+cpp/inc/program_options.cpp
+implementation
+
+cpp/example/program_options_example.cpp
+functional example
 
 additional sources:
 cpp/snippet/wingetopt/
