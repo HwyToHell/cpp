@@ -15,9 +15,10 @@ public:
 			StrArray* pItemArray = nullptr, // default: empty item array 
 			int offsetY = 0,				// default: continue at current y-position
 			int idxSelect = 0);				// default: first index in array selected
-	bool		addEntry(std::string item);
+	bool		addItem(std::string item);
 	int			getSelection();
 	bool		removeItem(int idx); // not implemented yet
+	bool		setSelection(int idx);
 private:
 	const int	captionY;
 	int			m_idxPrevious;

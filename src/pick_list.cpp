@@ -69,7 +69,7 @@ PickList::PickList(std::string itemName, StrArray* pItemArray, int offsetY, int 
 }
 
 
-bool PickList::addEntry(std::string item) {
+bool PickList::addItem(std::string item) {
 	m_itemArray.push_back(item);
 	printAllItems();
 	printChangedSelection();
@@ -175,4 +175,18 @@ bool PickList::printItem(int idx) {
 
 bool PickList::removeItem(int idx) {
 	return true;
+}
+
+
+bool PickList::setSelection(int idx) {
+	using namespace std;
+	
+	if (idx < 0 || idx >= (int)m_itemArray.size()) {
+		cerr << "index out of range" << endl;
+		return false;
+	} else {
+		m_idxActual = idx;
+		printChangedSelection();
+		return true;
+	}
 }
