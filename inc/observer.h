@@ -1,5 +1,5 @@
-/* Observer Pattern v0.2
- * 2018-01-14
+/* Observer Pattern v0.3
+ * 2018-07-22
  *
  * Subject	(base)				Observer (base)
  *  notify() --- update -------> Obs1 (derived)
@@ -25,8 +25,8 @@ public:
 	void notifyObservers() {
 		std::for_each(mObservers.begin(), mObservers.end(), updateObserver);
 	}
-	virtual std::string getParam(std::string name) = 0 {};
-	virtual bool setParam(std::string name, std::string value) = 0 {};
+    virtual std::string getParam(std::string name) = 0;
+    virtual bool setParam(std::string name, std::string value) = 0;
 };
 
 class Observer {
@@ -34,6 +34,5 @@ protected:
 	Subject* mSubject;
 public:
 	Observer(Subject* pSubject) : mSubject(pSubject) {}
-	virtual void update() = 0 {}
+    virtual void update() = 0;
 };
-

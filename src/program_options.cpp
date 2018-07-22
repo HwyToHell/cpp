@@ -2,10 +2,10 @@
 #include <cstring>
 #include "../inc/program_options.h"
 
-char ProgramOptions::getOpt(int argc, char* argv[], char* optstr) {
+char ProgramOptions::getOpt(int argc, const char* argv[], const char* optstr) {
 	if (mOptInd >= argc)
 		return mEof;
-	char *optch, *colon;
+    const char *optch, *colon;
 	mOptArg = nullptr;
 	if (*argv[mOptInd] == '-') {
 		++argv[mOptInd];
@@ -29,10 +29,10 @@ char ProgramOptions::getOpt(int argc, char* argv[], char* optstr) {
 }
 
 
-ProgramOptions::ProgramOptions(int ac, char* av[], char* optDesc) : mEof(-1) {
+ProgramOptions::ProgramOptions(int ac, const char* av[], const char *optDesc) : mEof(-1) {
 	mOptInd = 1;
 	char c;
-	while ((c = getOpt(ac, av, optDesc)) != mEof) {
+    while ((c = getOpt(ac, av, (char*)optDesc)) != mEof) {
 		if (c) {
 			if (mOptArg)
 				mOptMap.insert(TOpt(c, mOptArg));
@@ -52,4 +52,3 @@ bool ProgramOptions::exists(char option) {
 std::string& ProgramOptions::getOptArg(char option) {
 	return mOptMap[option];
 }
-

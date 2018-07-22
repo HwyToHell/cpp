@@ -11,7 +11,7 @@ class ProgramOptions {
 private:
 	TOptMap mOptMap;
 	int mOptInd;	// index to actual argv when parsing 
-	char* mOptArg;	// option's argument, if extended option
+    const char* mOptArg;	// option's argument, if extended option
 	const char mEof;
 
 	/* Opt::getOpt() parses argv similar to POSIX getopt()
@@ -22,10 +22,10 @@ private:
 		returns 0, if argv is not an allowed argument in optstr
 		returns -1 after last argument has been parsed
 	*/
-	char getOpt(int argc, char* argv[], char* optstr);
+    char getOpt(int argc, const char* argv[], const char *optstr);
 
 public:
-	ProgramOptions(int ac, char* av[], char* optDesc);
+    ProgramOptions(int ac, const char* av[], const char* optDesc);
 
 	bool exists(char option);
 
