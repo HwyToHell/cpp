@@ -15,40 +15,35 @@
 bool waitForEnter();
 
 
-bool addOcclusion(std::list<Occlusion>& lst) {
-	cv::Size roi(100,100);
-	Track trackRight(1);
-	Track trackLeft(2);
-	Occlusion occ(roi, &trackRight, &trackLeft, 1);
-	lst.push_back(occ);
-	return true;
-}
-
-
 int main(int argc, char* argv[]) {
 	using namespace std;
 
-	list<Occlusion> l;
-	addOcclusion(l);
-	cout << "add occlusion 1: " << " id: " << l.back().id() << endl;
-	cout << endl;
 
-	// copy construction is allowed
-	addOcclusion(l);
-	cout << "add occlusion 2: " << " id: " << l.back().id() << endl;
-	cout << endl;
+	// find tracks by ID
+	std::list<Track> tracks;
+	cv::Size size(30,20);
+	cv::Point origin(0,0);
+	cv::Size roi(100,100);
 
-	l.clear();
-	cout << "list cleared" << endl << endl;
+	for(int i=1; i<=4; ++i) {
+		Track track(i);
+		origin += cv::Point(0,20);
+		cv::Rect rect(origin, size);
+		track.addTrackEntry(rect, roi);
+		tracks.push_back(track);
+		cout << "id: " << i << " rect: " << rect << endl;
+	}
+
+	list<Track>::iterator it;
+	it = find_if(tracks.begin(), tracks.end(), TrackID_eq(2));
+	if (it != tracks.end()) {
+		cout << "found ID: " << it->getId() << endl;
+	} else {
+		cout << "ID not found" << endl;
+	}
+
+
 
 	waitForEnter();
 	return 0;
 }
-
-	
-
-
-
-
-
-
