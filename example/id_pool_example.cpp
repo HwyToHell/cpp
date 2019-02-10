@@ -1,14 +1,14 @@
-#include "../inc/id_pool.h"
+#include "stdafx.h"
 
-#include <iostream>
-#include <string>
+#include "../inc/id_pool.h"
+//#include "../../cpp/inc/id_pool.h"
+#include "../inc/pick_list.h"
 
 
 /// pause console until <enter> has been pressed
 bool waitForEnter();
 
-
-
+/// derived from IdPool for instance counting
 class DataWithID : public IdPool {
 public:
 	DataWithID(int data) : m_data(data) {}
@@ -17,6 +17,7 @@ private:
 	int m_data;
 };
 
+/// pushes additional data to instantiated objects
 void pushDataToArray(std::vector<DataWithID>& dataArray) {
 	DataWithID data(555);
 	dataArray.push_back(data);
@@ -26,6 +27,38 @@ void pushDataToArray(std::vector<DataWithID>& dataArray) {
 
 int main(int argc, char* argv[]) {
 	using namespace std;
+	/// ID Gen
+
+	// ID Gen instance with 9 uint
+	IdGen occIds(9);
+	cout << "pool size: " << occIds.poolSize() << endl;
+	list<size_t> lst;
+	for (size_t n = 1; n <= 4; ++n)
+		lst.push_back(occIds.allocID());
+	
+	// put ID #1 back to pool
+	occIds.freeID(lst.front());
+	lst.remove(lst.front());
+
+	// put ID #4 back to pool
+	occIds.freeID(lst.back());
+	lst.remove(lst.back());
+	
+	// put ID #3 back to pool
+	occIds.freeID(lst.back());
+	lst.remove(lst.back());
+
+	// next ID will be #3
+	size_t id3 = occIds.allocID();
+	cout << "next ID #3: " << id3 << endl;
+
+	// after sorting next ID will be #1 (#4 without sort)
+	occIds.sortGreater();
+	size_t id1 = occIds.allocID();
+	cout << "next ID #1: " << id1 << endl;
+
+	/*
+	/// ID Pool
 	// construction
 	IdPool a1;
 	cout << "1st instance id: " << a1.id() << endl;
@@ -79,21 +112,8 @@ int main(int argc, char* argv[]) {
 	IdPool a8;
 	cout << "8th instance id: " << a8.id() << endl;
 	cout << endl;
+	*/
 
 	waitForEnter();
 	return 0;
 }
-
-	
-bool waitForEnter() {
-	using namespace std;
-	cout << endl << "Press <enter> to exit" << endl;
-	string str;
-	getline(cin, str);
-	return true;
-}
-
-
-
-
-

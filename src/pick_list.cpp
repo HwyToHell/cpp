@@ -190,3 +190,12 @@ bool PickList::setSelection(int idx) {
 		return true;
 	}
 }
+
+
+bool waitForEnter() {
+	using namespace std;
+	cout << endl << "Press <enter> to exit" << endl;
+	string str;
+	getline(cin, str);
+	return true;
+}

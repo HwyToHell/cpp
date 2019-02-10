@@ -1,8 +1,14 @@
 /// initialize static variables
+#include "stdafx.h"
 #include "../inc/id_pool.h"
 
 #include <utility> 
 #include <iostream> // TODO DELETE after testing
+
+
+//////////////////////////////////////////////////////////////////////////////
+// ID Pool
+//////////////////////////////////////////////////////////////////////////////
 
 // specify maximum number of IDs available
 const int IdPool::s_maxIdCount = 20;
@@ -36,7 +42,7 @@ IdPool& IdPool::operator= (const IdPool& obj) {
 }
 
 
-IdPool::IdPool(IdPool&& obj) {
+/*IdPool::IdPool(IdPool&& obj) {
 	m_id = allocateID();
 	//std::swap(m_id, obj.m_id);
 	std::cout << "move c'tor id: " << m_id << std::endl;
@@ -47,7 +53,7 @@ IdPool& IdPool::operator= (IdPool&& obj) {
 	//m_id = obj.m_id;
 	std::cout << "move assignment id: " << m_id << std::endl;
 	return *this;
-}
+}*/
 
 
 int	IdPool::allocateID() {
@@ -71,6 +77,45 @@ bool IdPool::freeID(int id) {
 }
 
 
+//////////////////////////////////////////////////////////////////////////////
+// ID Generator
+//////////////////////////////////////////////////////////////////////////////
+
+IdGen::IdGen(size_t maxIdCount) : m_maxIdCount(maxIdCount) {
+	m_idPool.reserve(m_maxIdCount);
+	for (size_t n = m_maxIdCount; n >= 1; --n) 
+		m_idPool.push_back(n);
+}
+
+
+size_t IdGen::allocID() {
+	if (m_idPool.empty()) 
+		return 0;
+	else {
+		size_t id = m_idPool.back();
+		m_idPool.pop_back();
+		return id;
+	}
+}
+
+
+bool IdGen::freeID(size_t id) {
+	if ( m_idPool.size() < m_maxIdCount ) {
+		m_idPool.push_back(id);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+size_t IdGen::poolSize() {
+	return m_idPool.size();
+}
+
+
+void IdGen::sortGreater() {
+	std::sort(m_idPool.begin(), m_idPool.end(), std::greater<size_t>());
+}
 
 
 

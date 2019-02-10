@@ -1,45 +1,38 @@
 #include "stdafx.h"
-#include <climits>
-#include <functional>
-#pragma warning(disable: 4482) // MSVC10: enum nonstd extension
 
-#include "D:/Holger/app-dev/video-dev/car-count/include/config.h"
-#include "D:/Holger/app-dev/video-dev/car-count/include/frame_handler.h"
+#include "../../cpp/inc/id_pool.h"
+#include "../../cpp/inc/pick_list.h"
 #include "D:/Holger/app-dev/video-dev/car-count/include/tracker.h"
-#include "D:/Holger/app-dev/video-dev/car-count/include/recorder.h"
-//#include "../../inc/program_options.h"
-#include "../../inc/opencv/backgroundsubtraction.h"
 
 
 /// pause console until <enter> has been pressed
 bool waitForEnter();
 
 
-bool addOcclusion(std::list<Occlusion>& lst) {
-	cv::Size roi(100,100);
-	Track trackRight(1);
-	Track trackLeft(2);
-	Occlusion occ(roi, &trackRight, &trackLeft, 1);
-	lst.push_back(occ);
-	return true;
+void createOcclusion(IdGen* pIds, cv::Size roi, Track* trRight, Track* trLeft) {
+	using namespace std;
+	int steps = 10;
+	Occlusion occ1(pIds, roi, trRight, trLeft, steps); 
+	cout << "Occlusion 1 ID:" << occ1.id() << endl;
+
+	Occlusion occ2(pIds, roi, trRight, trLeft, steps); 
+	cout << "Occlusion 2 ID:" << occ2.id() << endl;
 }
+
 
 
 int main(int argc, char* argv[]) {
 	using namespace std;
 
-	list<Occlusion> l;
-	addOcclusion(l);
-	cout << "add occlusion 1: " << " id: " << l.back().id() << endl;
-	cout << endl;
+	IdGen occIDs(3);
+	cv::Size roi(100, 100);
+	Track trackRight(1);
+	Track trackLeft(2);
 
-	// copy construction is allowed
-	addOcclusion(l);
-	cout << "add occlusion 2: " << " id: " << l.back().id() << endl;
-	cout << endl;
+	createOcclusion(&occIDs, roi, &trackRight, &trackLeft);
 
-	l.clear();
-	cout << "list cleared" << endl << endl;
+	Occlusion occ(&occIDs, roi, &trackRight, &trackLeft, 5); 
+	cout << "Occlusion 1 ID:" << occ.id() << endl;
 
 	waitForEnter();
 	return 0;

@@ -36,6 +36,14 @@ private:
 
 
 // conio helper fcn
+/// get cursor position x
 int wherex();
+
+/// get cursor position y
 int wherey();
+
+/// clear entire line
 void clrln();
+
+/// pause console until <enter> has been pressed
+bool waitForEnter();
