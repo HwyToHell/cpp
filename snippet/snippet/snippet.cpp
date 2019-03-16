@@ -38,10 +38,10 @@ cv::Rect clipAtRoi(cv::Rect rec, cv::Size roi) {
 void createOcclusion(IdGen* pIds, cv::Size roi, Track* trRight, Track* trLeft) {
 	using namespace std;
 	int steps = 10;
-	Occlusion occ1(pIds, roi, trRight, trLeft, steps); 
+	Occlusion occ1(roi, trRight, trLeft, steps); 
 	cout << "Occlusion 1 ID:" << occ1.id() << endl;
 
-	Occlusion occ2(pIds, roi, trRight, trLeft, steps); 
+	Occlusion occ2(roi, trRight, trLeft, steps); 
 	cout << "Occlusion 2 ID:" << occ2.id() << endl;
 }
 
@@ -437,7 +437,7 @@ namespace vis {
 
 
 bool testOcclusion(std::list<Occlusion>& oList, IdGen* pIdGen, cv::Size roi, Track* movingRight, Track* movingLeft) {
-	Occlusion occ(pIdGen, roi, movingRight, movingLeft, 5);
+	Occlusion occ(roi, movingRight, movingLeft, 5);
 	oList.push_back(occ);
 	return true;
 }
@@ -448,7 +448,7 @@ int main(int argc, char* argv[]) {
 
 	// visual debugging of assignment process in occlusion
 	// create two blobs moving in opposite direction
-	IdGen occIDs(3);
+	IdGen occIDs(6);
 	cv::Size roi(100, 100);
 	cv::Size sizeBlob(30,20);
 
@@ -460,52 +460,26 @@ int main(int argc, char* argv[]) {
 	SceneTracker* pScene = &scene;
 	config.attach(pScene);
 
-	// test clip at roi
-	/*
-	cv::Rect blob(cv::Point(90,0), sizeBlob);
-	cv::Rect clip = clipAtRoi(blob, roi);
-	cout << "blob:         " << blob << endl;
-	cout << "clipped blob: " << clip << endl;
-	waitForEnter();
-	return 0;
-	*/
-
 	// test occlusion c'tor and d'tor
 	/*
 	Track right(1);
 	Track left(2);
 
-	list<Occlusion> occList;
-	
-	testOcclusion(occList, &occIDs, roi, &right, &left);
+	OcclusionIdList occIdList(3);
+	Occlusion occ(roi, &right, &left, 10);
+	cout << "occ id: " << occ.id() << endl;
 	waitForEnter();
 
-	list<Occlusion>::const_iterator it = occList.begin();
-	occList.erase(it);
-
-	Occlusion* occ1 = new Occlusion(&occIDs, roi, &right, &left, 5);
-	Occlusion* occ2 = new Occlusion(&occIDs, roi, &right, &left, 10);
-	*occ1 = *occ2;
-	
+	occIdList.add(occ);
+	const list<Occlusion>* pOccList = occIdList.getList();
+	cout << "occ id in list: " << pOccList->front().id() << endl;
 	waitForEnter();
-	delete occ2;
-
-	waitForEnter();
-	delete occ1;
-
-
-	waitForEnter();
-	return 0;
 	*/
-
-
 
 	// create blobs for occlusion
 	BlobTimeSeries blobTmSer = createOcclusion(roi, sizeBlob);
-
 	TrackTimeSeries trackTmSer;
 	cv::Mat canvas(roi, CV_8UC3, black);
-
 
 	// loop through blobList
 	for (g_idx = 0; g_idx < blobTmSer.size(); ++g_idx) {
