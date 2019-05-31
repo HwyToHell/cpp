@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "../inc/id_pool.h"
 
+#include <algorithm>
 #include <utility> 
 #include <iostream> // TODO DELETE after testing
 
@@ -31,12 +32,14 @@ IdPool::~IdPool() {
 
 IdPool::IdPool(const IdPool& obj) {
 	m_id = allocateID();
+    (void)obj;
 	std::cout << "copy c'tor id: " << m_id << std::endl;
 }
 
 	
 IdPool& IdPool::operator= (const IdPool& obj) {
 	//m_id = obj.m_id;
+    (void)obj;
 	std::cout << "assignment id: " << m_id << std::endl;
 	return *this;
 }

@@ -82,7 +82,7 @@ bool PickList::decIndex() {
 		return false;
 	--m_idxActual;
 	if (m_idxActual < 0)
-		m_idxActual = (int)m_itemArray.size()-1;
+        m_idxActual = static_cast<int>(m_itemArray.size()-1);
 	return true;
 }
 
@@ -105,7 +105,7 @@ int PickList::getSelection() {
 	}
 
 	// set cursor after last printed line
-	gotoxy(1, m_offsetY + captionY + (int)m_itemArray.size() + 2);
+    gotoxy(1, m_offsetY + captionY + static_cast<int>(m_itemArray.size()) + 2);
 	showcursor();
 	return(m_idxActual);
 }
@@ -115,7 +115,7 @@ bool PickList::incIndex() {
 	if (m_itemArray.size() == 0)
 		return false;
 	++m_idxActual;
-	if (m_idxActual >= (int)m_itemArray.size())
+    if (m_idxActual >= static_cast<int>(m_itemArray.size()))
 		m_idxActual = 0;
 	return true;
 }
@@ -128,7 +128,7 @@ void PickList::printAllItems() {
 	clrln();
 	cout << "Please select " << m_itemName << ":" << endl;
 
-	for (int idx = 0; idx < (int)m_itemArray.size(); ++idx) {
+    for (int idx = 0; idx < static_cast<int>(m_itemArray.size()); ++idx) {
 		clrln();
 		printItem(idx);
 	}
@@ -163,17 +163,18 @@ void PickList::printChangedSelection() {
 
 bool PickList::printItem(int idx) {
 	using namespace std;
-	if (idx < 0 || idx >= (int)m_itemArray.size())
+    if (idx < 0 || idx >= static_cast<int>(m_itemArray.size()))
 		return false;
 	else {
 		gotoxy(1, idx + m_offsetY + captionY);
-		cout << idx << " " << m_itemArray[idx] << endl;
+        cout << idx << " " << m_itemArray[static_cast<size_t>(idx)] << endl;
 		return true;
 	}
 }
 
 
 bool PickList::removeItem(int idx) {
+    (void)idx;
 	return true;
 }
 
@@ -181,7 +182,7 @@ bool PickList::removeItem(int idx) {
 bool PickList::setSelection(int idx) {
 	using namespace std;
 	
-	if (idx < 0 || idx >= (int)m_itemArray.size()) {
+    if (idx < 0 || idx >= static_cast<int>(m_itemArray.size())) {
 		cerr << "index out of range" << endl;
 		return false;
 	} else {

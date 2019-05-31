@@ -21,8 +21,8 @@ public:
 	bool		setSelection(int idx);
 private:
 	const int	captionY;
+    int			m_idxActual;
 	int			m_idxPrevious;
-	int			m_idxActual;
 	StrArray	m_itemArray;
 	std::string	m_itemName;
 	int			m_offsetY;

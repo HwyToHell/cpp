@@ -20,6 +20,7 @@ protected:
 	std::list<Observer*> mObservers;
 public:
 	Subject() {}
+    virtual ~Subject() {}
 	void attach(Observer* pObserver) { mObservers.push_back(pObserver); }
 	void detach(Observer* pObserver) { mObservers.remove(pObserver); }
 	void notifyObservers() {
@@ -34,5 +35,10 @@ protected:
 	Subject* mSubject;
 public:
 	Observer(Subject* pSubject) : mSubject(pSubject) {}
+    virtual ~Observer() {}
     virtual void update() = 0;
 };
+
+inline void updateObserver(Observer* pObserver) {
+    pObserver->update();
+}
