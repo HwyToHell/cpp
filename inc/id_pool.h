@@ -49,3 +49,12 @@ private:
 	std::vector<size_t>	m_idPool;
 	const size_t		m_maxIdCount;
 };
+
+
+/// unique ID generator (unique per process)
+class IdUnique {
+public:
+    size_t              allocID();
+private:
+    static size_t       s_id;
+};

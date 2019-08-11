@@ -120,6 +120,14 @@ void IdGen::sortGreater() {
 	std::sort(m_idPool.begin(), m_idPool.end(), std::greater<size_t>());
 }
 
+//////////////////////////////////////////////////////////////////////////////
+// ID Unique Generator
+//////////////////////////////////////////////////////////////////////////////
 
+size_t IdUnique::s_id = 0;
+
+size_t IdUnique::allocID() {
+    return ++s_id;
+}
 
 
