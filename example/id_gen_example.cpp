@@ -7,7 +7,7 @@
 
 /// pause console until <enter> has been pressed
 bool waitForEnter();
-bool setRoiToConfig(Config* pConfig, const cv::Size roi);
+bool setRoiSizeToConfig(Config* pConfig, const cv::Size roi);
 bool testOcclusion(std::list<Occlusion>& oList, IdGen* pIdGen, cv::Size roi, Track* movingRight, Track* movingLeft);
 
 
@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 	// set up scene
 	Config config;
 	Config* pConfig = &config;
-	setRoiToConfig(pConfig, roi);
+    setRoiSizeToConfig(pConfig, roi);
 	SceneTracker scene(pConfig); 
 	SceneTracker* pScene = &scene;
 	config.attach(pScene);

@@ -233,7 +233,7 @@ void printTrackInfoAt(cv::Mat& canvas, const TrackTimeSeries& timeSeries, const 
 }
 
 
-bool setRoiToConfig(Config* pConfig, const cv::Size roi) {
+bool setRoiSizeToConfig(Config* pConfig, const cv::Size roi) {
 	using namespace std;
 
 	// set config param roi
@@ -455,7 +455,7 @@ int main(int argc, char* argv[]) {
 	// set up scene
 	Config config;
 	Config* pConfig = &config;
-	setRoiToConfig(pConfig, roi);
+    setRoiSizeToConfig(pConfig, roi);
 	SceneTracker scene(pConfig); 
 	SceneTracker* pScene = &scene;
 	config.attach(pScene);
