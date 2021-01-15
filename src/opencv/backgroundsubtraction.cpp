@@ -18,6 +18,7 @@ BackgroundSubtractorLowPass::~BackgroundSubtractorLowPass() {
 }
 
 void BackgroundSubtractorLowPass::apply(cv::InputArray image, cv::OutputArray fgmask, double learningRate) {
+    std::ignore = learningRate;
 	// fill accu when applying for first time
 	if (!m_isInitialized) {
 		m_accu = cv::Mat(image.size(), CV_32F);
@@ -53,9 +54,11 @@ BackgroundSubtractorVibe::BackgroundSubtractorVibe() :
 BackgroundSubtractorVibe::~BackgroundSubtractorVibe() {
 	int ret = libvibeModel_Sequential_Free(m_model);
 	ret = 0;
+    (void)ret;
 }
 
 void BackgroundSubtractorVibe::apply(cv::InputArray image, cv::OutputArray fgmask, double learningRate) {
+    std::ignore = learningRate;
 
 	cv::Mat input;
 	cv::cvtColor(image.getMat(), input, cv::COLOR_BGR2HSV);
@@ -68,10 +71,14 @@ void BackgroundSubtractorVibe::apply(cv::InputArray image, cv::OutputArray fgmas
 
 		// RGB image
 		if (input.channels() == 3) {
-			libvibeModel_Sequential_AllocInit_8u_C3R(m_model, input.data, input.cols, input.rows);
+            libvibeModel_Sequential_AllocInit_8u_C3R(m_model, input.data,
+                                                     static_cast<uint32_t>(input.cols),
+                                                     static_cast<uint32_t>(input.rows));
 		// grayscale image
 		} else {
-			libvibeModel_Sequential_AllocInit_8u_C1R(m_model, input.data, input.cols, input.rows);	
+            libvibeModel_Sequential_AllocInit_8u_C1R(m_model, input.data,
+                                                     static_cast<uint32_t>(input.cols),
+                                                     static_cast<uint32_t>(input.rows));
 		}
 
 		m_isInitialized = true;
@@ -94,4 +101,6 @@ void BackgroundSubtractorVibe::apply(cv::InputArray image, cv::OutputArray fgmas
 
 }
 
-void BackgroundSubtractorVibe::getBackgroundImage(cv::OutputArray backgroundImage) const {}
+void BackgroundSubtractorVibe::getBackgroundImage(cv::OutputArray backgroundImage) const {
+    std::ignore = backgroundImage;
+}

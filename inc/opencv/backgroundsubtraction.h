@@ -27,6 +27,6 @@ public:
 	virtual void apply(cv::InputArray image, cv::OutputArray fgmask, double learningRate=-1);
 	virtual void getBackgroundImage(cv::OutputArray backgroundImage) const;
 private:
-	vibeModel_Sequential_t*		m_model;
-	bool						m_isInitialized;
+        bool						m_isInitialized;
+        vibeModel_Sequential_t*		m_model;
 };

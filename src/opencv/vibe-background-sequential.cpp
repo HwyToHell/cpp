@@ -264,7 +264,7 @@ int32_t libvibeModel_Sequential_AllocInit_8u_C1R(
   for (int index = width * height - 1; index >= 0; --index) {
     uint8_t value = image_data[index];
 
-    for (int x = 0; x < model->numberOfSamples - NUMBER_OF_HISTORY_IMAGES; ++x) {
+    for (uint32_t x = 0; x < model->numberOfSamples - NUMBER_OF_HISTORY_IMAGES; ++x) {
       int value_plus_noise = value + rand() % 20 - 10;
 
       if (value_plus_noise < 0) { value_plus_noise = 0; }

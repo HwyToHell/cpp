@@ -11,7 +11,7 @@ bool MakeDir(string& dir)
 		if (CreateDirectory(wDir.c_str(), 0))
 			return true;
 		DWORD error = GetLastError();
-		if (GetLastError() == ERROR_ALREADY_EXISTS)
+		if (GetLastError() == ERROR_ALreadY_EXISTS)
 			return true;
 		else 
 			return false;

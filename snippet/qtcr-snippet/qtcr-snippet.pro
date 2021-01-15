@@ -1,7 +1,7 @@
 TEMPLATE = app
-TARGET = counter
+TARGET = timer
 
-CONFIG += console c++11
+CONFIG += console c++14
 CONFIG -= app_bundle qt
 
 
@@ -16,6 +16,7 @@ linux {
             -lopencv_videoio
     LIBS += -lsqlite3
     LIBS += -lv4l2 -lv4l1
+    LIBS += -lpthread
 }
 
 windows {
@@ -38,13 +39,15 @@ windows {
 
 
 SOURCES += \
-    ../snippet/id-test.cpp \
-  \
- ../../src/id_pool.cpp
+    ../simple-timer/example/main.cpp \
+    ../simple-timer/src/log.cpp \
+    ../simple-timer/src/simple_timer.cpp
+
 
 
 HEADERS += \
-   \
-  ../../inc/id_pool.h
+    ../simple-timer/include/event.hpp \
+    ../simple-timer/include/simple_timer.hpp
+
 
 

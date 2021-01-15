@@ -97,7 +97,7 @@ RLUTIL_INLINE int kbhit(void) {
 	newt.c_cc[VMIN]  = 1; // minimum time to wait
 	newt.c_cc[VTIME] = 1; // minimum characters to wait for
 	tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-	ioctl(0, FIONREAD, &cnt); // Read count
+	ioctl(0, FIONread, &cnt); // read count
 	struct timeval tv;
 	tv.tv_sec  = 0;
 	tv.tv_usec = 100;
@@ -337,7 +337,7 @@ enum {
 };
 
 /// Function: getkey
-/// Reads a key press (blocking) and returns a key code.
+/// reads a key press (blocking) and returns a key code.
 ///
 /// See <Key codes for keyhit()>
 ///
