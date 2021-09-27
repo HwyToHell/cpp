@@ -16,10 +16,12 @@ int main(int argc, char* argv[]) {
 
     CircularBuffer<int> cb(5);
 
-    std::vector<int> vec(10);
-    vec[0] = 10;
-    vec[9] = 19;
+    /*
+    std::vector<int> vec;
     std::cout << vec.size() << std::endl;
+    int i = vec.front();
+    std::cout << vec.front() << std::endl;
+    */
 
     std::cout << "--- fill buffer ----------------------------------------------------------------" << std::endl;
     for (int i = 1; i < 7; ++i) {
@@ -30,9 +32,15 @@ int main(int argc, char* argv[]) {
     }
 
     std::cout << std::endl << "--- discharge buffer -----------------------------------------------------------" << std::endl;
-    for (size_t i = 0; i < 3; ++i) {
+    for (size_t i = 0; i < 6; ++i) {
         cb.pop();
-        std::cout << "pop: " << i << " front: " << cb.front() << " size: " << cb.size() << " full: " << cb.isFull() << std::endl;
+
+        if (cb.isEmpty()) {
+            std::cout << "no front access";
+        } else {
+            std::cout << "pop: " << i << " front: " << cb.front();
+        }
+        std::cout << " size: " << cb.size() << " empty: " << cb.isEmpty() << std::endl;
         printBuffer(cb);
         std::cout << std::endl;
     }

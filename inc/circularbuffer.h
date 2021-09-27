@@ -30,6 +30,11 @@ public:
         return m_buffer[m_head];
     }
 
+    bool isEmpty()
+    {
+        return m_head == m_tail && !m_full;
+    }
+
     bool isFull()
     {
         return m_full;
@@ -38,8 +43,7 @@ public:
     // pop from head
     void pop()
     {
-        // buffer not empty
-        if (m_head != m_tail || m_full) {
+        if (!isEmpty()) {
             incHead();
         }
         m_full = false;
